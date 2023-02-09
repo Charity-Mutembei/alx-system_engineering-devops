@@ -1,2 +1,2 @@
 #!/bin/bash
-find . -type d chmod 777 
+chmod -R 777 *
