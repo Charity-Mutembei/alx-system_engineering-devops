@@ -1,2 +1,2 @@
 #!/bin/bash
- echo "ls /etc/passwd >> 2-hellofile"  
+ echo "cat /etc/passwd" 
