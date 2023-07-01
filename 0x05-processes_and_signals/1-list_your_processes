@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 #Listing all active processes
-
 # Get the list of currently running processes with the desired format
 processes=$(ps ax -o user,pid,%cpu,%mem,vsz,rss,tty,stat,start,time,command --headers)
 

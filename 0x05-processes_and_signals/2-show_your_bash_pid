@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#This is a task 2
+# shellcheck disable=SC2009
+# Get the list of currently running processes and filter lines containing the "bash" word
+processes=$(ps ax -o user,pid,%cpu,%mem,vsz,rss,tty,stat,start,time,command --headers | grep bash)
+
+# Display the filtered list of processes
+echo "$processes"
