@@ -1,4 +1,5 @@
 #!/usr/bin/bash
+# This script is displaying "Best School" 10 times
 
 count=10
 
