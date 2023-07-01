@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+#Task 6 task
+
+# Define the number of iterations
+count=20
+
+# Initialize counter
+i=1
+
+# Loop while counter is less than or equal to 20
+while [ $i -le $count ]
+do
+  case $i in
+    4)
+      echo "4"
+      echo "Bad luck from China"
+      ;;
+    9)
+      echo "9"
+      echo "Bad luck from Japan"
+      ;;
+    17)
+      echo "17"
+      echo "Bad luck from Italy"
+      ;;
+    *)
+      echo $i
+      ;;
+  esac
+
+  i=$((i+1))
+done
