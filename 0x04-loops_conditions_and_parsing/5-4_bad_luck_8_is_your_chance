@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Ten again
+
+count=10
+
+# Initialize counter
+i=1
+
+# Loop while counter is less than or equal to 10
+while [ $i -le $count ]
+do
+  if [ $i -eq 4 ]; then
+    echo "Bad luck"
+  elif [ $i -eq 8 ]; then
+    echo "Good luck"
+  else
+    echo "Best School"
+  fi
+
+  i=$((i+1))
+done
