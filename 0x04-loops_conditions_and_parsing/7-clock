@@ -6,16 +6,17 @@ hour=0
 minute=1
 
 # Loop while hour is less than or equal to 12 and minute is less than or equal to 59
-while [ $hour -le 12 ] && [ $minute -le 59 ]
+while [ $hour -le 12 ]
 do
-  printf "%02d:%02d\n" $hour $minute
+  echo "Hour: $hour"
 
-  # Increment minute
-  minute=$((minute+1))
+  # Loop while minute is less than or equal to 59
+  while [ $minute -le 59 ]
+  do
+    echo $minute
+    minute=$((minute+1))
+  done
 
-  # Check if minute exceeds 59
-  if [ $minute -gt 59 ]; then
-    minute=0
-    hour=$((hour+1))
-  fi
+  minute=0
+  hour=$((hour+1))
 done | head -n 70
