@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+#Task 7 Task time
+
+# Initialize variables
+hour=0
+minute=1
+
+# Loop while hour is less than or equal to 12 and minute is less than or equal to 59
+while [ $hour -le 12 ] && [ $minute -le 59 ]
+do
+  printf "%02d:%02d\n" $hour $minute
+
+  # Increment minute
+  minute=$((minute+1))
+
+  # Check if minute exceeds 59
+  if [ $minute -gt 59 ]; then
+    minute=0
+    hour=$((hour+1))
+  fi
+done | head -n 70
