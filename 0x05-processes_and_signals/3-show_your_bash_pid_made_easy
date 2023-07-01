@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#This is task 3
+
+# Find the PIDs of processes whose names contain "bash"
+pids=$(pgrep -f bash)
+
+# Iterate over the PIDs and display the PID and process name
+for pid in $pids; do
+    process_name=$(ps -p "$pid" -o comm=)
+    echo "$pid $process_name"
+done
