@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#The "Best School" 10 times
+
+count=10
+
+# Initialize counter
+i=1
+
+# Loop until counter reaches 10
+until [ $i -gt $count ]
+do
+  echo "Best School"
+  i=$((i+1))
+done
