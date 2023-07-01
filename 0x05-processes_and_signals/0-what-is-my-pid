@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# this ismy bsdh script for PID
+
+# Display the script's own PID
+echo "$$"
