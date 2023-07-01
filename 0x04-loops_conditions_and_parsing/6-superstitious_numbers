@@ -13,15 +13,15 @@ do
   case $i in
     4)
       echo "4"
-      echo "Bad luck from China"
+      echo "bad luck from China"
       ;;
     9)
       echo "9"
-      echo "Bad luck from Japan"
+      echo "bad luck from Japan"
       ;;
     17)
       echo "17"
-      echo "Bad luck from Italy"
+      echo "bad luck from Italy"
       ;;
     *)
       echo $i
