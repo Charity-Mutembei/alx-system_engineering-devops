@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#Task 7
+
+# Find the PID of the 7-highlander process
+pid=$(pgrep -f "7-highlander")
+
+# Check if the process is running
+if [ -n "$pid" ]; then
+    # Register a signal handler for SIGTERM
+    trap 'echo "I am invincible!!!"' SIGTERM
+
+    # Loop indefinitely
+    while true; do
+        echo "To infinity and beyond"
+        sleep 2
+    done
+else
+    echo "Process not found"
+fi
