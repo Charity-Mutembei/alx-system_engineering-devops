@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#This script prints "Best School" 10 times
+
+# Define the number of iterations
+count=10
+
+# Initialize counter
+i=1
+
+# Loop while counter is less than or equal to 10
+while [ $i -le $count ]
+do
+  echo "Best School"
+  i=$((i+1))
+done
