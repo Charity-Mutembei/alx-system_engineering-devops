@@ -17,6 +17,6 @@ do
     minute=$((minute+1))
   done
 
-  minute=0
+  minute=1
   hour=$((hour+1))
 done | head -n 70
