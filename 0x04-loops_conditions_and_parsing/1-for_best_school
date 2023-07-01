@@ -3,7 +3,7 @@
 
 count=10
 
-for ((i=1; i<=$count; i++))
+for ((i=1; i<=count; i++))
 do
   echo "Best School"
 done
