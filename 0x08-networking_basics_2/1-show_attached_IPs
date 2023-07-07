@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#all active IPV4 shows
+
+hostname -I
