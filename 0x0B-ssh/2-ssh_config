@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#this is a file that holds the commands to
+#1. make the SSH config file not take passwords
+#2. Make the same file follow a private key
+Host *
+      PasswordAuthentication no
+      IdentifyFile ~/.ssh/school
