@@ -2,4 +2,4 @@
 #this is a script for an RSA key pair
 #it must be one named school, and have 4096 bits, and
 #protected by the passphrase - betty
-ssh-keygen -t rsa -b 4096 -f school
+ssh-keygen -t rsa -b 4096 -f school -N betty
