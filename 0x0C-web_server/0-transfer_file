@@ -1,0 +1,20 @@
+#!/bin/bash
+# Check if at least 4 parameters are passed
+if [ $# -lt 4 ]; then
+    echo "Usage: $0 PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
+    exit 1
+fi
+
+file_path="$1"
+server_ip="$2"
+username="$3"
+ssh_key="$4"
+
+# Construct the destination path on the server's home directory
+destination="~/$(basename "$file_path")"
+
+# Disable strict host key checking for scp
+export SCP_OPTIONS="-o StrictHostKeyChecking=no"
+
+# Perform the file transfer using scp
+scp -i "$ssh_key" $SCP_OPTIONS "$file_path" "$username"@"$server_ip":"$destination"
