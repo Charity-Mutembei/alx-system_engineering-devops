@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#install nginx on my web-01
+#update the package and the install
+apt-get update -y
+apt-get install nginx -y
+#configure the Nginx to listen to a portal 80
+echo "server {
+    listen 80;
+    location / {
+        echo 'Hello World!';
+    }
+}" > /etc/nginx/sites-available/default
+#Restart Nginx using the server
+service nginx restart
+#success message
+echo "Nginx setup completed."
