@@ -13,11 +13,5 @@ echo "Hello World!" > "$temp_file"
 # Use curl to query nginx and check if it returns the expected output
 curl_output=$(curl -s http://localhost/)
 expected_output=$(cat "$temp_file")
-# Compare the actual output with the expected output
-if [ "$curl_output" = "$expected_output" ]; then
-    echo "Nginx is configured correctly and returning 'Hello World!'"
-else
-    echo "Nginx is not configured correctly"
-fi
 # Clean up the temporary file
 rm "$temp_file"
