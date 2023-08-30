@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+#404 page
+# Update package list and install nginx
+sudo apt update
+sudo apt install nginx -y
+
+# Configure nginx to listen on port 80
+sudo sed -i 's/listen 80 default_server;/listen 80;/' /etc/nginx/sites-available/default
+
+# Add a location block for redirection
+sudo bash -c 'cat <<EOL > /etc/nginx/sites-available/default
+server {
+    listen 80;
+
+    server_name _;
+
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+
+    location / {
+        root /var/www/html;
+        index index.html index.htm;
+    }
+
+    error_page 404 /404.html;
+    location = /404.html {
+        internal;
+        root /var/www/html;
+        echo "Ceci n\'est pas une page";
+    }
+}
+EOL'
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+sudo service nginx restart
