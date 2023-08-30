@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#dugging code
+# Start Apache service in the background
+apache2-foreground &
+# Keep the script running to prevent the container from exiting
+tail -f /dev/null
