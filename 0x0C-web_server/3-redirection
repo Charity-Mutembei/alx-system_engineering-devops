@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#redirection
+# Update package list and install nginx
+sudo apt update
+sudo apt install nginx -y
+# Configure nginx to listen on port 80
+sudo sed -i 's/listen 80 default_server;/listen 80;/' /etc/nginx/sites-available/default
+# Add a location block for redirection
+sudo sed -i '/server_name _;/a \ $new_location' /etc/nginx/sites-available/default
+# Restart nginx without using systemctl
+sudo /etc/init.d/nginx restart
