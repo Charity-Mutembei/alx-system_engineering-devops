@@ -1,14 +1,17 @@
 #!/bin/bash
 
-# Update the package repositories
+#1. Update the package repositories
+#2. Install Nginx if it's not already installed
+#3. Add custom response header to Nginx configuration
+#4. Test Nginx configuration for syntax errors
+# 5 & 6. Restart Nginx to apply changes
+
 sudo apt-get -y update
-# Install Nginx if it's not already installed
 sudo apt-get -y install nginx
-# Add custom response header to Nginx configuration
+
 header_line="add_header X-Served-By \$hostname;"
 sudo sed -i "11i\\$header_line" /etc/nginx/nginx.conf
-# Test Nginx configuration for syntax errors
 sudo nginx -t
-# Restart Nginx to apply changes
+
 sudo systemctl restart nginx
 echo "Nginx has been configured with the custom X-Served-By header."
