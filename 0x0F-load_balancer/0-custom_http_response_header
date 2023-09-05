@@ -1,0 +1,15 @@
+#!/bin/bash
+# Install Nginx
+sudo apt-get update
+sudo apt-get install -y nginx
+# Create a custom header configuration file
+echo 'add_header X-Served-By $host;' | sudo tee /etc/nginx/conf.d/custom_headers.conf
+# Test Nginx configuration
+sudo nginx -t
+# Reload Nginx
+sudo systemctl reload nginx
+# Clean up
+sudo rm /etc/nginx/sites-enabled/default
+# Restart Nginx to apply changes (optional)
+# sudo systemctl restart nginx
+echo "Nginx has been configured with custom headers."
