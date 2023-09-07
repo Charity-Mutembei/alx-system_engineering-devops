@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Bash script for retrieving subdomain details.
 
 function get_single_subdomain_details {
