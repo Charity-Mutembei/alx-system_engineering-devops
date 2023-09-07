@@ -1,40 +1,31 @@
 #!/usr/bin/env bash
-#Bash script that will display information about subdomains.
-# Function to display information about a subdomain
-display_info() {
-    local domain="$1"
-    local subdomain="$2"
 
-    # Read the DNS zone file for the specified domain
-    while read -r line; do
-        # Parse the DNS zone file line
-        sub=$(echo "$line" | awk '{print $1}')
-        type=$(echo "$line" | awk '{print $2}')
-        destination=$(echo "$line" | awk '{print $3}')
+# Bash script for retrieving subdomain details.
 
-        # Check if the subdomain matches the specified subdomain (if provided)
-        if [ -n "$subdomain" ] && [ "$subdomain" != "$sub" ]; then
-            continue
-        fi
-
-        # Display the information
-        echo "The subdomain $sub is a $type record and points to $destination"
-    done < <(grep -E "^(www|lb-01|web-01|web-02)\.$domain" /etc/bind/db.$domain)
+function get_single_subdomain_details {
+    dig "${subdomain}.$domain" | grep -A1 'ANSWER SECTION:' | \
+    awk 'FNR == 2 {printf "The subdomain %s is a %s record and points to %s\n", subdomain, $4, $5}' subdomain="${subdomain}"
 }
-# Check if both domain and subdomain are provided
-if [ "$#" -eq 2 ]; then
-    DOMAIN="$1"
-    SUBDOMAIN="$2"
-    display_info "$DOMAIN" "$SUBDOMAIN"
-# Check if only the domain is provided
-elif [ "$#" -eq 1 ]; then
-    DOMAIN="$1"
-    # Display information for default subdomains in the specified order
-    display_info "$DOMAIN" "www"
-    display_info "$DOMAIN" "lb-01"
-    display_info "$DOMAIN" "web-01"
-    display_info "$DOMAIN" "web-02"
+
+function get_all_default_subdomain_details {
+    default_subdomains=("www" "lb-01" "web-01" "web-02")
+
+    for sub in "${default_subdomains[@]}";
+    do
+        dig "${sub}.$domain" | grep -A1 'ANSWER SECTION:' | \
+        awk 'FNR == 2 {printf "The subdomain %s is a %s record and points to %s\n", sub, $4, $5}' sub="${sub}"
+    done
+}
+
+if [ $# -lt 1 ]
+then
+    echo "Please provide a domain name."
+elif [ $# -eq 1 ]
+then
+    domain="$1"
+    get_all_default_subdomain_details "$domain"
 else
-    echo "Usage: $0 <domain> [subdomain]"
-    exit 1
+    domain="$1"
+    subdomain="$2"
+    get_single_subdomain_details "$domain" "$subdomain"
 fi
