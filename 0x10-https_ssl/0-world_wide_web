@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Function to display information about a subdomain
+#Bash script that will display information about subdomains.
 
+# Function to display information about a subdomain
 display_info() {
     local domain="$1"
     local subdomain="$2"
@@ -24,14 +25,11 @@ display_info() {
         echo "The subdomain $sub is a $record_type record and points to $destination"
     done
 }
-
 # Check for the correct number of arguments
 if [ $# -lt 1 ]; then
     echo "Usage: $0 <domain> [subdomain]"
     exit 1
 fi
-
 domain="$1"
 subdomain="$2"
-
 display_info "$domain" "$subdomain"
