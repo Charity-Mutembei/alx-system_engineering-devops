@@ -22,10 +22,7 @@ then
     echo "Please provide a domain name."
 elif [ $# -eq 1 ]
 then
-    domain="$1"
-    get_all_default_subdomain_details "$domain";
+    get_all_default_subdomain_details "$1";
 else
-    domain="$1"
-    subdomain="$2"
-    get_single_subdomain_details "$domain" "$subdomain";
+    get_single_subdomain_details "$1" "$2";
 fi
