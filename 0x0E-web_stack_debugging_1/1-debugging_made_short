@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 #make your fix short and sweet.
-ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-service nginx start
-kill "$(pgrep 'nginx' | head -1)"
+pgrep nginx &> /dev/null || (sudo apt-get update && sudo apt-get install -y nginx)
+pgrep nginx &> /dev/null || sudo systemctl start nginx
+sudo sed -i '/listen 80;/s/#*//' /etc/nginx/sites-available/default
+sudo systemctl reload nginx
