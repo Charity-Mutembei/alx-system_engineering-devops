@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+#debugging is the purpose of this script
 
 # Install Nginx if it's not already installed
 if ! command -v nginx &> /dev/null; then
