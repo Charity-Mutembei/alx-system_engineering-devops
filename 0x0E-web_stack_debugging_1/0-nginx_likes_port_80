@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Install Nginx if it's not already installed
+if ! command -v nginx &> /dev/null; then
+    echo "Installing Nginx..."
+    sudo apt-get update
+    sudo apt-get install -y nginx
+fi
+
+# Check Nginx configuration for syntax errors
+if sudo nginx -t | grep -q "syntax is okay" ; then
+    echo "Nginx configuration is valid."
+else
+    echo "Nginx configuration has errors. Please fix them."
+    exit 1
+fi
+
+# Check if Nginx is running
+if sudo systemctl is-active --quiet nginx ; then
+    echo "Nginx is already running."
+else
+    echo "Starting Nginx..."
+    sudo systemctl start nginx
+fi
+
+# Modify the default server block to listen on port 80
+if ! grep -q "listen 80" /etc/nginx/sites-available/default ; then
+    echo "Configuring Nginx to listen on port 80..."
+    sudo sed -i 's/listen 80;/listen 80 default_server;/g' /etc/nginx/sites-available/default
+fi
+
+# Reload Nginx to apply the changes
+echo "Reloading Nginx..."
+sudo systemctl reload nginx
+
+echo "Nginx is now configured to listen on port 80."
+
