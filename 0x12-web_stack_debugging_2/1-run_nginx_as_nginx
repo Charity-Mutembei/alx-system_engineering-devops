@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+#turning root user from default and make default be nginx
+# Check if the script is running as root
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root"
+   exit 1
+fi
+
+# Create a custom nginx configuration file
+cat > /etc/nginx/nginx.conf <<EOF
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /var/run/nginx.pid;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+    log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                  '$status $body_bytes_sent "$http_referer" '
+                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log /var/log/nginx/access.log main;
+
+    sendfile on;
+    keepalive_timeout 65;
+
+    server {
+        listen 8080 default_server;
+        server_name _;
+
+        location / {
+            root /usr/share/nginx/html;
+            index index.html;
+        }
+    }
+}
+EOF
+
+# Create the necessary directories
+mkdir -p /var/log/nginx
+mkdir -p /usr/share/nginx/html
+
+# Set the correct permissions
+chown -R nginx:nginx /var/log/nginx
+chown -R nginx:nginx /usr/share/nginx/html
+
+# Start Nginx
+nginx -g 'daemon off;'
