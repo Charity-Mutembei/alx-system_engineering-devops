@@ -1,16 +1,7 @@
 #!/usr/bin/env bash
 #turning root user from default and make default be nginx
-# Ensure the script is run as root
-if [ "$EUID" -ne 0 ]; then
-  echo "This script must be run as root."
-  exit 1
-fi
-# Update Nginx configuration to use nginx user and desired port
 sed -i "s/#user www-data/user nginx/" /etc/nginx/nginx.conf
 sed -i "s/80/8080/g" /etc/nginx/sites-available/default
-# Change permissions on nginx.conf
 chmod 644 /etc/nginx/nginx.conf
-# Stop Apache2 if it's running
 pkill apache2
-# Start Nginx with the desired user
 sudo -u nginx service nginx start
