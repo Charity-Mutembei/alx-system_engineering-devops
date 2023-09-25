@@ -11,35 +11,53 @@ from sys import argv
 
 
 if __name__ == "__main__":
+    # Create a session for making requests
     session = requests.Session()
 
+    # Get the employee ID from the command line arguments
     employee_id = argv[1]
-    base_url = 'https://jsonplaceholder.typicode.com/users'
 
-    todos_url = f'{base_url}/{employee_id}/todos'
-    employee_info_url = f'{base_url}/{employee_id}'
+    # Define the base URL
+    base_url = 'https://jsonplaceholder.typicode.com/users/{}'
 
-    todos_response = session.get(todos_url)
-    employee_info_response = session.get(employee_info_url)
+    # Define the specific endpoints for tasks and name
+    tasks_endpoint = 'todos'
+    name_endpoint = ''
 
-    todos_data = todos_response.json()
-    employee_name = employee_info_response.json()['username']
+    # Construct the URLs for employee tasks and name
+    tasks_url = base_url.format(employee_id) + '/' + tasks_endpoint
+    name_url = base_url.format(employee_id) + '/' + name_endpoint
 
-    completed_tasks = [
-        {
-            "task": task['title'],
-            "completed": task['completed'],
-            "username": employee_name
-        }
-        for task in todos_data
-    ]
+    # Fetch employee tasks and name from the API
+    tasks_response = session.get(tasks_url)
+    name_response = session.get(name_url)
 
-    user_data = {employee_id: completed_tasks}
+    # Parse the JSON responses
+    tasks_data = tasks_response.json()
+    username = name_response.json()['username']
 
-    output_file = f'{employee_id}.json'
-    with open(output_file, 'w') as json_file:
-        json.dump(user_data, json_file, indent=4)
+    # Initialize an empty list to store task information
+    task_list = []
 
-    print("Employee {} is done with tasks({}/{}):".format(
-        employee_name, len(completed_tasks), todos_data))
+    # Create a dictionary to store user data
+    user_data = {}
 
+    # Iterate through tasks and append information to the task_list
+    for task in tasks_data:
+        task_list.append(
+            {
+                "task": task.get('title'),
+                "completed": task.get('completed'),
+                "username": username,
+            }
+        )
+
+    # Assign the task_list to the user_data with the user ID as the key
+    user_data[employee_id] = task_list
+
+    # Create the JSON filename
+    json_filename = employee_id + ".json"
+
+    # Write the user data to a JSON file
+    with open(json_filename, 'w') as json_file:
+        json.dump(user_data, json_file)
