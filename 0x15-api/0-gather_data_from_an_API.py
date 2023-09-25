@@ -7,31 +7,28 @@ TO-DO list
 
 import json
 import requests
-import sys
+from sys import argv
 
+if __name__ == "__main__":
+    session = requests.Session()
 
-if len(sys.argv) != 2:
-    print("Usage: python script.py <employee_id>")
-    sys.exit(1)
+    employee_id = argv[1]
+    base_url = 'https://jsonplaceholder.typicode.com/users'
 
-employee_id = sys.argv[1]
+    todos_url = f'{base_url}/{employee_id}/todos'
+    employee_info_url = f'{base_url}/{employee_id}'
 
-base_url = 'https://jsonplaceholder.typicode.com/users'
-id_url = f'{base_url}/{employee_id}/todos'
-name_url = f'{base_url}/{employee_id}'
+    todos_response = session.get(todos_url)
+    employee_info_response = session.get(employee_info_url)
 
-session = requests.Session()
-employee_data = session.get(id_url).json()
-employee_name = session.get(name_url).json()['name']
+    todos_data = todos_response.json()
+    employee_name = employee_info_response.json()['name']
 
-total_tasks = sum(1 for task in employee_data if task['completed'])
+    completed_tasks = [task for task in todos_data if task['completed']]
+    total_tasks = len(todos_data)
 
-completed_tasks_message = (
-    f"Employee {employee_name} is done with tasks "
-    f"({total_tasks}/{len(employee_data)}):"
-)
-print(completed_tasks_message)
+    print("Employee {} is done with tasks({}/{}):".format(
+        employee_name, len(completed_tasks), total_tasks))
 
-for task in employee_data:
-    if task['completed']:
-        print(f"\t{task['title']}")
+    for task in completed_tasks:
+        print("\t " + task.get('title'))
