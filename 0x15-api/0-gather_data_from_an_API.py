@@ -4,10 +4,9 @@ This script will use the REST API, taken an employees ID
 and return their information on the progress of their
 TO-DO list
 """
-
-import requests
 import json
 import sys
+import requests
 
 
 def get_employee_info(employee_id):
