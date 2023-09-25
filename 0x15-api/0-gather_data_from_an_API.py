@@ -4,12 +4,17 @@ This script will use the REST API, taken an employees ID
 and return their information on the progress of their
 TO-DO list
 """
+
 import json
-import sys
 import requests
+import sys
 
 
 def get_employee_info(employee_id):
+    """
+    the function to the sorting and output
+    """
+
     base_url = 'https://jsonplaceholder.typicode.com/users'
     id_url = f'{base_url}/{employee_id}/todos'
     name_url = f'{base_url}/{employee_id}'
