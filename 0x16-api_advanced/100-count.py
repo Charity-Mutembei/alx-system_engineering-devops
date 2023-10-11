@@ -36,8 +36,7 @@ def count_words(subreddit, word_list, counts=None, after=None):
                 for keyword in word_list:
                     """Check if the keyword appears
                     in the title, ignoring case and word boundaries"""
-                    occurrences = len(re.findall(rf'\b{re.escape(keyword)}\b',
-                                                 title, re.IGNORECASE))
+                    occurrences = len(re.findall(rf'\b{re.escape(keyword)}\b', title, re.IGNORECASE))
                     if occurrences > 0:
                         counts[keyword] = counts.get(keyword, 0) + occurrences
 
@@ -47,8 +46,7 @@ def count_words(subreddit, word_list, counts=None, after=None):
             else:
                 """Sort the counts in descending order
                 by count and then alphabetically"""
-                sorted_counts = sorted(counts.items(),
-                                       key=lambda item: (-item[1], item[0]))
+                sorted_counts = sorted(counts.items(), key=lambda item: (-item[1], item[0]))
 
                 for keyword, count in sorted_counts:
                     print(f"{keyword}: {count}")
