@@ -1,16 +1,7 @@
-# Define a Puppet resource to create the missing configuration file
+# Using strace, find out why Apache
+# is returning a 500 error.
 
-file { '/etc/apache2/conf-available/missing.conf':
-  ensure  => present,
-  content => 'Your configuration content here',
-  owner   => 'apache',
-  group   => 'apache',
-  mode    => '0644',
-  notify  => Service['apache2'],
-}
-
-service { 'apache2':
-  ensure  => running,
-  enable  => true,
-  require => File['/etc/apache2/conf-available/missing.conf'],
+exec {'Fixer':
+  command => "sed -i 's/phpp/php/' /var/www/html/wp-settings.php",
+  path    => '/usr/bin/:/usr/local/bin/:/bin/'
 }
