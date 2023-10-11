@@ -9,8 +9,6 @@ file { '/etc/apache2/conf-available/missing.conf':
   notify  => Service['apache2'],
 }
 
-# Restart the Apache service to apply the configuration changes
-
 service { 'apache2':
   ensure  => running,
   enable  => true,
