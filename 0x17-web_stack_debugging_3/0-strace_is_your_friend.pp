@@ -1,7 +1,11 @@
-# Using strace, find out why Apache
-# is returning a 500 error.
+# Define a Puppet resource to
+# create the missing configuration file
 
-exec {'Fixer':
-  command => "sed -i 's/phpp/php/' /var/www/html/wp-settings.php",
-  path    => '/usr/bin/:/usr/local/bin/:/bin/'
+exec { 'diagnose_apache_issue':
+command     => 'strace -f -p <apache_process_id> 2>&1',
+path        => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+refreshonly => true,
+logoutput   => true,
+unless      => 'grep -q "Specific Error Condition" /var/log/strace_output.log', # Replace with a unique error condition
+notify      => Exec['fix_apache_issue'],
 }
