@@ -1,16 +1,15 @@
-# Define a Puppet resource to create the missing configuration file
-file { '/etc/apache2/conf-available/missing.conf':
-  ensure  => present,
-  content => 'Your configuration content here',
-  owner   => 'apache',
-  group   => 'apache',
-  mode    => '0644',
-  notify  => Service['apache2'],
+# Create a Puppet manifest to fix the Apache 500 error
+
+# Ensure the wp-settings.php file exists
+file { '/var/www/html/wp-settings.php':
+ensure => file,
+mode   => '0644',
 }
 
-# Restart the Apache service to apply the configuration changes
-service { 'apache2':
-  ensure  => running,
-  enable  => true,
-  require => File['/etc/apache2/conf-available/missing.conf'],
+# Define an Exec resource to replace the string using Puppet
+exec { 'fix_wp_settings_php':
+command     => 'sed -i "s/phpp/php/" /var/www/html/wp-settings.php',
+path        => ['/usr/bin', '/usr/local/bin', '/bin'],
+refreshonly => true,
+subscribe   => File['/var/www/html/wp-settings.php'],
 }
