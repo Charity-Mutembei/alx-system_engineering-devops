@@ -1,4 +1,5 @@
 # Define a Puppet resource to create the missing configuration file
+
 file { '/etc/apache2/conf-available/missing.conf':
   ensure  => present,
   content => 'Your configuration content here',
@@ -9,6 +10,7 @@ file { '/etc/apache2/conf-available/missing.conf':
 }
 
 # Restart the Apache service to apply the configuration changes
+
 service { 'apache2':
   ensure  => running,
   enable  => true,
