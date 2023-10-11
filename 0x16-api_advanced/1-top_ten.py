@@ -8,7 +8,7 @@ import requests
 
 def top_ten(subreddit):
     """Define the Reddit API URL for the subreddit's hot posts"""
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=9"
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
 
     """Set a custom User-Agent to avoid Reddit API request issues"""
     headers = {'User-Agent': 'YourBotName/1.0'}
@@ -28,7 +28,7 @@ def top_ten(subreddit):
             else:
                 for index, post in enumerate(posts):
                     """Extract and print the title of each post"""
-                    print(f"{index + 1}. {post['data']['title']}")
+                    print(f"{post['data']['title']}")
         except (KeyError, ValueError):
             """Handle JSON parsing errors"""
             print("Error parsing the Reddit API response.")
