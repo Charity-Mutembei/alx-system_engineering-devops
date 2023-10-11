@@ -2,6 +2,6 @@
 # create the missing configuration file
 
 exec { 'diagnose_apache_issue':
-command => 'strace -f -p <apache_process_id> 2>&1',
+command => 'sed -i s/phpp/php/ /var/www/html/wp-settings.php',
 path    => ['/usr/bin/', '/usr/local/bin/', '/bin/'],
 }
