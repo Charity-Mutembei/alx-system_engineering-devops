@@ -1,4 +1,3 @@
-  /etc/nginx/sites-available/myappserverproject   
 server {
     listen 80;
     server_name _; # Listen on all available netw>
@@ -11,4 +10,3 @@ server {
         # Add additional configuration for your o>
     }
 }
-
