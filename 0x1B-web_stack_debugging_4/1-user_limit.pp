@@ -3,5 +3,5 @@ $target_user = 'holberton'
 
 file { '/etc/security/limits.conf':
   ensure  => file,
-  content => '#File erased',
+  content => '#File is probably deleted',
 }
